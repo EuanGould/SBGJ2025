@@ -70,6 +70,24 @@ public class Player : MonoBehaviour
             // we could also put some kind of stun effect here
             ChangeDrinkStage(0);
         }
+        else if (col.gameObject.CompareTag("NPC"))
+        {
+            if (col.gameObject.GetComponent<NPC>().getQuenched() == false)
+            {
+                if (GetDrinkStage() == 1)
+                {
+                    // the npc drinks your drink and is quenched
+                    col.gameObject.GetComponent<NPC>().Quench();
+                    ChangeDrinkStage(0);
+                }
+                else if (GetDrinkStage() == 2)
+                {
+                    // the npc drinks your poison and dies
+                    col.gameObject.GetComponent<NPC>().Die();
+                    ChangeDrinkStage(0);
+                }
+            }
+        }
     }
 
     // Update is called once per frame
