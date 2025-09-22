@@ -6,11 +6,15 @@ public class Player : MonoBehaviour
 {
     public float drinkless_speed = 5f;
     public float endrinked_speed = 2.5f;
+    public GameObject dialogueUI;
+
     private float speed = 5f;
     private Rigidbody2D rb;
     private Vector2 input;
     private int drink_stage = 0;
     private SpriteRenderer sprite_renderer;
+    private bool engaged = false;
+    private GameObject engagedNPC = null;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -72,30 +76,71 @@ public class Player : MonoBehaviour
         }
         else if (col.gameObject.CompareTag("NPC"))
         {
-            if (col.gameObject.GetComponent<NPC>().getQuenched() == false)
+            if (col.gameObject.GetComponent<NPC>().getQuenched() == false && GetDrinkStage() != 0)
             {
-                if (GetDrinkStage() == 1)
-                {
-                    // the npc drinks your drink and is quenched
-                    col.gameObject.GetComponent<NPC>().Quench();
-                    ChangeDrinkStage(0);
-                }
-                else if (GetDrinkStage() == 2)
-                {
-                    // the npc drinks your poison and dies
-                    col.gameObject.GetComponent<NPC>().Die();
-                    ChangeDrinkStage(0);
-                }
+
+                Engage(col.gameObject);
             }
         }
+    }
+
+    void Engage(GameObject NPC)
+    {
+        // begins dialogue with an NPC
+        
+        dialogueUI.SetActive(true);
+        engaged = true;
+        NPC.GetComponent<NPC>().Engage();
+        engagedNPC = NPC;
+    }
+
+    public void DialogueSuccess()
+    {
+        // for when a conversation ends in the NPC not drinking your drink
+        engagedNPC.GetComponent<NPC>().Quench();
+        Disengage();
+    }
+
+    public void DialogueFailure()
+    {
+        // for when a conversation ends in the NPC drinking your drink
+        if (GetDrinkStage() == 1)
+        {
+            // the npc drinks your drink and is quenched
+            engagedNPC.GetComponent<NPC>().Quench();
+            ChangeDrinkStage(0);
+        }
+        else if (GetDrinkStage() == 2)
+        {
+            // the npc drinks your poison and dies
+            engagedNPC.GetComponent<NPC>().Die();
+            ChangeDrinkStage(0);
+        }
+
+        Disengage();
+    }
+
+    void Disengage()
+    {
+        print("disengaged");
+        dialogueUI.SetActive(false);
+        engaged = false;
+        engagedNPC.GetComponent<NPC>().Disengage();
     }
 
     // Update is called once per frame
     void Update()
     {
-        input = InputSystem.actions.FindAction("Move").ReadValue<Vector2>();
+        if (!engaged)
+        {
+            input = InputSystem.actions.FindAction("Move").ReadValue<Vector2>();
 
-        input.Normalize();
+            input.Normalize();
+        }
+        else
+        {
+            input = Vector2.zero;
+        }
     }
 
     private void FixedUpdate()

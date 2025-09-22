@@ -17,6 +17,7 @@ public class NPC : MonoBehaviour
     private Vector2 goal;
     private Rigidbody2D rb;
     private float quench_timer;
+    private bool engaged = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,7 +38,7 @@ public class NPC : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (alive)
+        if (alive && !engaged)
         {
             Vector2 diff_to_goal = goal - new Vector2(transform.position.x, transform.position.y);
 
@@ -62,6 +63,18 @@ public class NPC : MonoBehaviour
                 }
             }
         }
+    }
+
+
+    public void Engage()
+    {
+        engaged = true;
+        rb.linearVelocity = Vector2.zero;
+    }
+
+    public void Disengage()
+    {
+        engaged = false;
     }
 
     public bool getQuenched()
