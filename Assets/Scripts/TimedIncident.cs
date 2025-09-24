@@ -3,6 +3,8 @@ using UnityEngine;
 public class TimedIncident : MonoBehaviour
 {
     public float time_until_active;
+    public AudioSource sfx;
+    
     private float time_left;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -25,6 +27,7 @@ public class TimedIncident : MonoBehaviour
             {
                 gameObject.GetComponent<SpriteRenderer>().enabled = true;
                 gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                sfx.Play();
             }
         }
     }

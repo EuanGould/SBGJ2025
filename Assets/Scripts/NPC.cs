@@ -5,6 +5,8 @@ using static Unity.VisualScripting.Metadata;
 public class NPC : MonoBehaviour
 {
     public GameObject goals_object;
+    public AudioSource death_sound;
+
     public float base_speed;
     public float queched_speed;
     public float quenchability;
@@ -109,5 +111,7 @@ public class NPC : MonoBehaviour
         // replace with sprite change
         gameObject.GetComponent<SpriteRenderer>().color = Color.darkMagenta;
         // replace with sprite change
+
+        death_sound.Play();
     }
 }

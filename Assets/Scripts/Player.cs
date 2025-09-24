@@ -8,6 +8,11 @@ public class Player : MonoBehaviour
     public float endrinked_speed = 2.5f;
     public GameObject dialogueUI;
 
+    public AudioSource item_pickup_sound;
+    public AudioSource hit_sound;
+    public AudioSource dialogue_success_sound;
+    public AudioSource dialogue_failure_sound;
+
     private float speed = 5f;
     private Rigidbody2D rb;
     private Vector2 input;
@@ -64,21 +69,23 @@ public class Player : MonoBehaviour
         if(col.gameObject.CompareTag("Bar") && GetDrinkStage() == 0)
         {
             ChangeDrinkStage(1);
+            item_pickup_sound.Play();
         }
         else if (col.gameObject.CompareTag("Poisoner") && GetDrinkStage() == 1)
         {
             ChangeDrinkStage(2);
+            item_pickup_sound.Play();
         }
         else if (col.gameObject.CompareTag("Incident"))
         {
             // we could also put some kind of stun effect here
             ChangeDrinkStage(0);
+            hit_sound.Play();
         }
         else if (col.gameObject.CompareTag("NPC"))
         {
             if (col.gameObject.GetComponent<NPC>().getQuenched() == false && GetDrinkStage() != 0)
             {
-
                 Engage(col.gameObject);
             }
         }
@@ -101,9 +108,12 @@ public class Player : MonoBehaviour
         {
             // for when a conversation ends in the NPC not drinking your drink
             engagedNPC.GetComponent<NPC>().Quench();
+            dialogue_success_sound.Play();
         }
         else
         {
+            dialogue_failure_sound.Play();
+
             // for when a conversation ends in the NPC drinking your drink
             if (GetDrinkStage() == 1)
             {
