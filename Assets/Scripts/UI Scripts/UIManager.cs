@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     public void Init()
     {
         StartMenu = StartScreen.GetComponent<Canvas>();
+        StartMenu.enabled = true;
     }
     public void OnStartClick()
     {
