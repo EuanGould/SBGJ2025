@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
         engaged = true;
         NPC.GetComponent<NPC>().Engage();
         engagedNPC = NPC;
-        dialogueUI.GetComponent<DialogueUI>().SetupText(NPC.GetComponent<NPC>().optionA, NPC.GetComponent<NPC>().optionB, NPC.GetComponent<NPC>().optionC);
+        dialogueUI.GetComponent<DialogueUI>().SetupText(NPC.GetComponent<NPC>().optionA, NPC.GetComponent<NPC>().optionB, NPC.GetComponent<NPC>().optionC, NPC.GetComponent<NPC>().dialogueText);
     }
 
     public void Dialogue(int answer)

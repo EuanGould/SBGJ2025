@@ -12,6 +12,7 @@ public class NPC : MonoBehaviour
     public string optionA;
     public string optionB;
     public string optionC;
+    public string dialogueText;
 
     private float speed;
     private bool alive = true;
