@@ -11,6 +11,7 @@ public class NPC : MonoBehaviour
     public int correctAnswer;
     public string optionA;
     public string optionB;
+    public string optionC;
 
     private float speed;
     private bool alive = true;

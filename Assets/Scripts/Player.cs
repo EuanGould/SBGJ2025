@@ -92,29 +92,31 @@ public class Player : MonoBehaviour
         engaged = true;
         NPC.GetComponent<NPC>().Engage();
         engagedNPC = NPC;
+        dialogueUI.GetComponent<DialogueUI>().SetupText(NPC.GetComponent<NPC>().optionA, NPC.GetComponent<NPC>().optionB, NPC.GetComponent<NPC>().optionC);
     }
 
     public void Dialogue(int answer)
     {
-        // for when a conversation ends in the NPC not drinking your drink
-        engagedNPC.GetComponent<NPC>().Quench();
-        Disengage();
-    }
-
-    public void DialogueFailure()
-    {
-        // for when a conversation ends in the NPC drinking your drink
-        if (GetDrinkStage() == 1)
+        if (answer == engagedNPC.GetComponent<NPC>().correctAnswer)
         {
-            // the npc drinks your drink and is quenched
+            // for when a conversation ends in the NPC not drinking your drink
             engagedNPC.GetComponent<NPC>().Quench();
-            ChangeDrinkStage(0);
         }
-        else if (GetDrinkStage() == 2)
+        else
         {
-            // the npc drinks your poison and dies
-            engagedNPC.GetComponent<NPC>().Die();
-            ChangeDrinkStage(0);
+            // for when a conversation ends in the NPC drinking your drink
+            if (GetDrinkStage() == 1)
+            {
+                // the npc drinks your drink and is quenched
+                engagedNPC.GetComponent<NPC>().Quench();
+                ChangeDrinkStage(0);
+            }
+            else if (GetDrinkStage() == 2)
+            {
+                // the npc drinks your poison and dies
+                engagedNPC.GetComponent<NPC>().Die();
+                ChangeDrinkStage(0);
+            }
         }
 
         Disengage();
