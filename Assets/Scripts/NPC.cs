@@ -8,6 +8,9 @@ public class NPC : MonoBehaviour
     public float base_speed;
     public float queched_speed;
     public float quenchability;
+    public int correctAnswer;
+    public string optionA;
+    public string optionB;
 
     private float speed;
     private bool alive = true;

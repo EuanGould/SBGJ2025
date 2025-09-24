@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
         engagedNPC = NPC;
     }
 
-    public void DialogueSuccess()
+    public void Dialogue(int answer)
     {
         // for when a conversation ends in the NPC not drinking your drink
         engagedNPC.GetComponent<NPC>().Quench();
