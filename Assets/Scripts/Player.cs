@@ -104,6 +104,8 @@ public class Player : MonoBehaviour
 
     public void Dialogue(int answer)
     {
+        print("Dialogue called and answered:" + answer.ToString());
+        
         if (answer == engagedNPC.GetComponent<NPC>().correctAnswer)
         {
             // for when a conversation ends in the NPC not drinking your drink
