@@ -13,6 +13,10 @@ public class Player : MonoBehaviour
     public AudioSource dialogue_success_sound;
     public AudioSource dialogue_failure_sound;
 
+    public GameObject DrinkText;
+    public GameObject PoisonText;
+    public GameObject DictatorText;
+
     private float speed = 5f;
     private Rigidbody2D rb;
     private Vector2 input;
@@ -41,18 +45,24 @@ public class Player : MonoBehaviour
         
         if (drink_stage == 0)
         {
-            sprite_renderer.color = Color.green;
             speed = drinkless_speed;
+            DrinkText.SetActive(true);
+            PoisonText.SetActive(false);
+            DictatorText.SetActive(false);
         }
         else if (drink_stage == 1)
         {
-            sprite_renderer.color = Color.yellow;
             speed = endrinked_speed;
+            DrinkText.SetActive(false);
+            PoisonText.SetActive(true);
+            DictatorText.SetActive(false);
         }
         else if (drink_stage == 2)
         {
-            sprite_renderer.color = Color.red;
             speed = endrinked_speed;
+            DrinkText.SetActive(false);
+            PoisonText.SetActive(false);
+            DictatorText.SetActive(true);
         }
 
     }

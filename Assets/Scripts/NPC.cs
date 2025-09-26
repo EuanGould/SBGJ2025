@@ -1,6 +1,5 @@
 using System.Linq;
 using UnityEngine;
-using static Unity.VisualScripting.Metadata;
 
 public class NPC : MonoBehaviour
 {
@@ -15,6 +14,8 @@ public class NPC : MonoBehaviour
     public string optionB;
     public string optionC;
     public string dialogueText;
+    public bool isDictator = false;
+    public GameObject uiManager;
 
     private float speed;
     private bool alive = true;
@@ -39,7 +40,6 @@ public class NPC : MonoBehaviour
         speed = base_speed;
 
         // replace with sprite change
-        gameObject.GetComponent<SpriteRenderer>().color = Color.pink;
         // replace with sprite change
     }
 
@@ -109,9 +109,14 @@ public class NPC : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
 
         // replace with sprite change
-        gameObject.GetComponent<SpriteRenderer>().color = Color.darkMagenta;
+        transform.Rotate(0, 0, 90);
         // replace with sprite change
 
         death_sound.Play();
+
+        if (isDictator)
+        {
+            uiManager.GetComponent<UIManager>().ShowGameOver();
+        }
     }
 }
